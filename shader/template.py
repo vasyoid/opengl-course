@@ -6,7 +6,6 @@ from pygame.locals import DOUBLEBUF, OPENGL
 from OpenGL.GL import *
 from OpenGL.GL.shaders import compileProgram, compileShader
 
-# Vertex Shader
 VERTEX_SHADER = """
 #version 330
 
@@ -24,7 +23,6 @@ void main()
 }
 """
 
-# Fragment Shader
 FRAGMENT_SHADER = """
 #version 330
 
@@ -44,13 +42,11 @@ def main():
     display = (800, 800)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 
-    # Compile shaders and program
     shader_program = compileProgram(
         compileShader(VERTEX_SHADER, GL_VERTEX_SHADER),
         compileShader(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
     )
 
-    # Vertex data
     vertices = [
         -0.5 * sqrt(3), -1 / 2, 0, 1, 1, 1,
         0.5 * sqrt(3), -1 / 2, 0, 1, 1, 1,
@@ -58,26 +54,22 @@ def main():
     ]
 
     bind_vertices(shader_program, vertices)
-
-    # Use the shader program
     glUseProgram(shader_program)
 
-    running = True
-    while running:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit()
+                exit(0)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.event.Event(pygame.QUIT))
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT)
         glDrawArrays(GL_TRIANGLES, 0, 3)
 
         pygame.display.flip()
         pygame.time.wait(10)
-
-    pygame.quit()
 
 
 def bind_vertices(shader_program, vertices):
