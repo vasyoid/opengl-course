@@ -10,6 +10,7 @@ VERTEX_SHADER = """
 
 layout (location = 0) in vec3 vPos;
 layout (location = 1) in vec3 vColor;
+
 out vec3 color;
 
 void main() {
@@ -29,7 +30,8 @@ void main() {
 }
 """
 
-def bind_vertices( vertices):
+
+def bind_vertices(vertices):
     vertices = (GLfloat * len(vertices))(*vertices)
     glBindVertexArray(glGenVertexArrays(1))
     glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers(1))
@@ -42,6 +44,7 @@ def bind_vertices( vertices):
     v_color = 1
     glVertexAttribPointer(v_color, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), c_void_p(3 * sizeof(GLfloat)))
     glEnableVertexAttribArray(v_color)
+
 
 def main():
     if not glfw.init():
