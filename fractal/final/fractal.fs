@@ -1,0 +1,26 @@
+#version 330
+
+in vec3 pos;
+
+out vec4 fragColor;
+
+vec2 f(vec2 z, vec2 c)
+{
+    return vec2(z.x * z.x - z.y * z.y, 2 * z.x * z.y) + c;
+}
+
+void main()
+{
+    int maxIter = 100;
+    vec2 c = pos.xy;
+    c.x -= 0.5;
+    vec2 z = vec2(0, 0);
+    int i = 0;
+    while (i < maxIter && length(z) < 4)
+    {
+        z = f(z, c);
+        i++;
+    }
+    float color = min(1.0, i / 100.0);
+    fragColor = vec4(color, color, color, 1);
+}
