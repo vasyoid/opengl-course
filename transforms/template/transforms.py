@@ -17,7 +17,7 @@ def init_glfw(width, height, title):
         exit(0)
 
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 4)
-    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 6)
+    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 1)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
     glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, GL_TRUE)
 
@@ -109,7 +109,7 @@ def main():
         1, -1, 1,
         1, -1, 1,
         -1, -1, 1,
-        - 1, -1, -1,
+        -1, -1, -1,
     ]
 
     bind_vertices(vertices, (3,))
@@ -129,6 +129,9 @@ def main():
 
         if glfw.get_key(window, glfw.KEY_ESCAPE) == glfw.PRESS:
             glfw.set_window_should_close(window, glfw.TRUE)
+
+        model = glm.mat4(1)
+        load_matrix_to_shader(shader_program, model, "model")
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glDrawArrays(GL_TRIANGLES, 0, 36)
