@@ -248,7 +248,7 @@ def main():
     width = 1000
     height = 800
 
-    window = init_glfw(width, height, "3D")
+    window = init_glfw(width, height, "Texture")
 
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_MULTISAMPLE)
@@ -261,7 +261,7 @@ def main():
 
     glUseProgram(shader_program)
 
-    tex_wood = load_texture("../wood.png")
+    tex_wood = load_texture("../../camera/wood.png")
     tex_gold = load_texture("../gold.png")
     tex_lake = load_texture("../lake.png")
     tex_world = load_texture("../canyon.jpg")
