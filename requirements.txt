@@ -3,3 +3,4 @@ PyOpenGL
 pygame
 numpy
 PyGLM
+pillow
