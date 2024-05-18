@@ -261,7 +261,7 @@ def main():
 
     glUseProgram(shader_program)
 
-    tex_wood = load_texture("../../camera/wood.png")
+    tex_wood = load_texture("../wood.png")
     tex_gold = load_texture("../gold.png")
     tex_lake = load_texture("../lake.png")
     tex_world = load_texture("../canyon.jpg")
