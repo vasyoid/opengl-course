@@ -152,7 +152,7 @@ class Camera:
         return glm.vec3(
             glm.cos(self.yaw) * glm.cos(self.pitch),
             glm.sin(self.pitch),
-            glm.sin(self.yaw) * glm.cos(self.pitch),
+            -glm.sin(self.yaw) * glm.cos(self.pitch),
         )
 
     def get_right(self):
