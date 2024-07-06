@@ -16,5 +16,5 @@ void main()
     // TASK_3: calculate specular lighting
     float specular = 1;
     float final = ambient + 0.8 * diffuse + 0.4 * specular;
-    fragColor = vec4(0, 0, 0, 1);
+    fragColor = vec4(final, final, final, 1);
 }
