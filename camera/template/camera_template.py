@@ -144,7 +144,7 @@ class Camera:
         self.pos = glm.vec3(0, 0, 0)
         self.yaw = 0
         self.pitch = 0
-        self.up = glm.vec3(0, 1, 0)
+        self.world_up = glm.vec3(0, 1, 0)
         self.turn_speed = 0.8
         self.move_speed = 2
 
@@ -152,6 +152,9 @@ class Camera:
         return glm.vec3(0, 0, 0)
 
     def get_right(self):
+        return glm.vec3(0, 0, 0)
+
+    def get_up(self):
         return glm.vec3(0, 0, 0)
 
     def get_matrix(self):

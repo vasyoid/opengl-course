@@ -13,7 +13,7 @@ class Camera:
         self.pos = glm.vec3(0, 0, 0)
         self.yaw = 0
         self.pitch = 0
-        self.up = glm.vec3(0, 1, 0)
+        self.world_up = glm.vec3(0, 1, 0)
         self.turn_speed = 0.8
         self.move_speed = 2
 
@@ -25,15 +25,14 @@ class Camera:
         )
 
     def get_right(self):
-        return glm.normalize(glm.cross(self.up, -self.get_front()))
+        return glm.normalize(glm.cross(self.get_front(), self.world_up))
+
+    def get_up(self):
+        return glm.cross(self.get_right(), self.get_front())
 
     def get_matrix(self):
-        front = glm.vec3(
-            glm.cos(self.yaw) * glm.cos(self.pitch),
-            glm.sin(self.pitch),
-            -glm.sin(self.yaw) * glm.cos(self.pitch),
-        )
-        return glm.lookAt(self.pos, self.pos + front, self.up)
+        front = self.get_front()
+        return glm.lookAt(self.pos, self.pos + front, self.world_up)
 
     def turn_left(self, delta_time):
         self.yaw += delta_time * self.turn_speed
@@ -60,10 +59,10 @@ class Camera:
         self.pos -= self.get_front() * delta_time * self.move_speed
 
     def move_up(self, delta_time):
-        self.pos += self.up * delta_time * self.move_speed
+        self.pos += self.get_up() * delta_time * self.move_speed
 
     def move_down(self, delta_time):
-        self.pos -= self.up * delta_time * self.move_speed
+        self.pos -= self.get_up() * delta_time * self.move_speed
 
 
 def read_shader_file(filename):
