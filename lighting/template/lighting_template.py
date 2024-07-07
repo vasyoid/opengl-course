@@ -202,7 +202,7 @@ def main():
     width = 1000
     height = 800
 
-    window = init_glfw(width, height, "Diffuse")
+    window = init_glfw(width, height, "Lighting")
 
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_MULTISAMPLE)
