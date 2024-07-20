@@ -1,0 +1,23 @@
+#version 410
+
+layout (location = 0) in vec3 vPos;
+layout (location = 1) in vec3 vNormal;
+// TASK2: add in variable for texture coordinate
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+out vec3 pos;
+out vec3 normal;
+
+// TASK2: add out variable for texture coordinate
+
+
+void main()
+{
+    gl_Position = projection * view * model * vec4(vPos, 1.0);
+    pos = vec3(model * vec4(vPos, 1.0));
+    normal = normalize(mat3(inverse(transpose(model))) * vNormal);
+    // TASK2: assign in texture coordinate to out texture coordinate
+}
