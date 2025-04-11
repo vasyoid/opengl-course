@@ -3,6 +3,52 @@
 in vec3 pos;
 out vec4 fragColor;
 
+uniform vec3 u_cam_pos;
+uniform vec3 u_sphere_pos;
+uniform vec3 u_cube_pos;
+uniform vec3 u_cylinder_pos;
+uniform float u_twist;
+
+float xCylinder(vec3 p)
+{
+    return 42;
+}
+
+float yCylinder(vec3 p)
+{
+    return 42;
+}
+
+float zCylinder(vec3 p)
+{
+    return 42;
+}
+
+float cube(vec3 p)
+{
+    return 42;
+}
+
+float sphere(vec3 p)
+{
+    return 42;
+}
+
+float scene(vec3 p)
+{
+    return min(min(sphere(p), cube(p)), yCylinder(p));
+}
+
+vec3 sceneColor(vec3 p)
+{
+    return vec3(1, 1, 1);
+}
+
+float rayMarch(vec3 origin, vec3 dir)
+{
+    return 0;
+}
+
 vec3 normal(vec3 p)
 {
     vec3 n = vec3(0, 0, 0);
@@ -15,40 +61,27 @@ vec3 normal(vec3 p)
     return normalize(n);
 }
 
-float rayMarch(origin, direction) {
-    return 1000.0;
-}
-
 void main()
 {
+    vec3 origin = u_cam_pos;
+    vec3 dir = pos.xyz - origin;
+    dir = normalize(dir);
 
-    // Get ray origin and direction from camera uniforms
-    vec3 origin = vec3(0, 0, -2);
-    vec3 direction = pos.xyz - origin;
-    direction = normalize(direction);
+    float disTravelled = rayMarch(origin, dir);
+    vec3 hitPos = origin + disTravelled * dir;
+    vec3 n = normal(hitPos);
 
-    // Ray marching and find total distance travelled
-    float dist = rayMarch(origin, direction);// use normalized ray
-
-    // Find the hit position
-    vec3 hp = origin + dist * direction;
-
-    // Get normal of hit point
-    vec3 n = normal(hp);
-
-    if (dist >= 1000)
-    { // if ray doesn't hit anything
+    if (disTravelled >= 1000)
+    {
         fragColor = vec4(0, 0, 0, 1);
     }
     else
-    { // if ray hits something
-        // Calculate Diffuse model
-        float dotNL = dot(n, vec3(2, 2, 0));
+    {
+        float dotNL = dot(n, normalize(vec3(-1, 1, 1)));
         float diff = max(dotNL, 0.0) * 0.5;
-        float spec = pow(diff, 16) * 3;
+        float spec = pow(diff, 4) * 3;
         float ambient = 0.15;
-
-        vec3 color = vec3(1, 1, 1) * (spec + ambient + diff);
-        fragColor = vec4(color, 1);// color output
+        vec3 color = sceneColor(hitPos) * diff + spec + ambient;
+        fragColor = vec4(color, 1);
     }
 }
