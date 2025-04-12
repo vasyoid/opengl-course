@@ -7,7 +7,6 @@ uniform vec3 u_cam_pos;
 uniform vec3 u_sphere_pos;
 uniform vec3 u_cube_pos;
 uniform vec3 u_cylinder_pos;
-uniform float u_twist;
 
 float xCylinder(vec3 p)
 {
@@ -81,7 +80,7 @@ void main()
         float diff = max(dotNL, 0.0) * 0.5;
         float spec = pow(diff, 4) * 3;
         float ambient = 0.15;
-        vec3 color = sceneColor(hitPos) * diff + spec + ambient;
+        vec3 color = sceneColor(hitPos) * (diff + spec + ambient);
         fragColor = vec4(color, 1);
     }
 }
