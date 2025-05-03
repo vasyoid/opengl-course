@@ -78,7 +78,11 @@ void main()
     {
         float dotNL = dot(n, normalize(vec3(-1, 1, 1)));
         float diff = max(dotNL, 0.0) * 0.5;
-        float spec = pow(diff, 4) * 3;
+
+        vec3 viewDir = normalize(origin - hitPos);
+        vec3 reflectDir = reflect(-lightDir, n);
+        float spec = pow(clamp(dot(viewDir, reflectDir), 0, 1), 32) * 0.2;
+
         float ambient = 0.15;
         vec3 color = sceneColor(hitPos) * (diff + spec + ambient);
         fragColor = vec4(color, 1);
