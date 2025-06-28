@@ -3,9 +3,9 @@
 uniform vec2 currentPoint;
 uniform vec4 currentColor;
 
-uniform float pointsCnt;
+uniform int pointsCnt;
 
-layout(packed, binding = 1) uniform PointsUniformBlock {
+layout(std140, binding = 1) uniform PointsUniformBlock {
     vec2 points[256];
 };
 

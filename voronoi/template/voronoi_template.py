@@ -166,7 +166,7 @@ def main():
 def update_points(points, pos_buffer, color_buffer, points_cnt_loc):
     update_buffer(pos_buffer, get_pos_data(points))
     update_buffer(color_buffer, get_color_data(points))
-    glUniform1f(points_cnt_loc, len(points))
+    glUniform1i(points_cnt_loc, len(points))
 
 
 if __name__ == "__main__":
