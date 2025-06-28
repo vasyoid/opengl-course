@@ -88,7 +88,7 @@ def update_buffer(buffer, data):
 
 
 def get_pos_data(points):
-    return numpy.array([x for point in points for x in point.pos], dtype='float32')
+    return numpy.array([x for point in points for x in point.pos + (0, 0)], dtype='float32')
 
 
 def get_color_data(points):
