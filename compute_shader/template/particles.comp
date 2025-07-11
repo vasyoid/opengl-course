@@ -1,0 +1,40 @@
+#version 430
+
+uniform float deltaTime;
+uniform float time;
+
+
+layout(local_size_x = 256) in;
+
+layout(std430, binding = 0) buffer ParticlePositionsAndSize {
+    vec4 positions[];
+};
+
+layout(std430, binding = 1) buffer ParticleParameters {
+    vec4 parameters[];
+};
+
+float rand(inout uint seed) {
+    seed = (seed ^ 61u) ^ (seed >> 16u);
+    seed *= 9u;
+    seed = seed ^ (seed >> 4u);
+    seed *= 0x27d4eb2du;
+    seed = seed ^ (seed >> 15u);
+    return float(seed & 0x00FFFFFFu) / float(0x01000000u);
+}
+
+void main() {
+    uint id = gl_GlobalInvocationID.x;
+    float ttl = parameters[id].z;
+    uint seed = uint(uint(time * 100) * id * 747796405u);
+    // random(seed) -- generate a random number from 0 to 1
+
+    if (ttl <= 0) {
+    } else {
+        vec2 pos = positions[id].xy;
+        vec2 v = parameters[id].xy;
+        v.y -= deltaTime * 0.5;
+        positions[id].xy = vec2(pos + v * deltaTime);
+        parameters[id] = vec4(v, ttl - deltaTime, 0);
+    }
+}
